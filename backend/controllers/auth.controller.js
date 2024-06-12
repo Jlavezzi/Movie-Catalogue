@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const User = require('../models/user.model'); // Replace with your actual User model
+const bcrypt = require('bcryptjs');
+const User = require('../models/user.model'); 
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -22,7 +22,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.register = async (req, res) => {
+const register = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -30,9 +30,15 @@ exports.register = async (req, res) => {
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
-    res.json({ message: 'Registration successful' });
+    res.status(201).json({ message: 'Registration successful' });
+    res.redirect('/login')
+    
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
 
+module.exports ={
+  login,
+  register
+}
