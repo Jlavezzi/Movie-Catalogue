@@ -16,9 +16,6 @@ const cors = require("cors");
 app.use(express.json()); //parse JSON bodies
 app.use(cors()); //enable CORS
 
-
-
-
 app.use(express.json());
 app.use(passport.initialize());
 
