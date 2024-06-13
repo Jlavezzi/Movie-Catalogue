@@ -27,8 +27,12 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   const { username, password } = req.body;
 
+    // Retrieve the salt rounds value from environment variables
+    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS, 10);
+
   try {
-    const hashedPassword = bcrypt.hashSync(password, 10);
+   // Hash the password with the configured salt rounds
+    const hashedPassword = bcrypt.hashSync(password, saltRounds);
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
