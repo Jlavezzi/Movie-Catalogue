@@ -3,19 +3,21 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user.model'); 
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
+//login controller
 const login = async (req, res) => {
+  // extract from request from client
   const { username, password } = req.body;
 
   try {
+    //check if user exists
     const user = await User.findOne({ username });
-
+    //validate if password is correct or id user exists
     if (!user || !user.validatePassword(password)) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
-
+//create a  session id
     const payload = { id: user.id };
-    const token = jwt.sign(payload, jwtSecretKey, { expiresIn: '1h' }); // Use an environment variable in a real application
-
+    const token = jwt.sign(payload, jwtSecretKey, { expiresIn: '1h' }); 
     res.json({ message: 'Login successful', token });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
