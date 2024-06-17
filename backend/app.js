@@ -1,6 +1,7 @@
 //app.js
 //import necessary modules
 require("dotenv").config(); // Load environment variables from .env file
+require('./config/mongoose.config.js')
 const express = require("express");
 //creeate an express app
 const app = express();
@@ -12,6 +13,7 @@ const authenticateJWT = require("./middleware/auth.middleware"); // Custom JWT a
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+// const port = process.env.PORT || 3000
 //middlewares
 app.use(express.json()); //parse JSON bodies
 app.use(cors()); //enable CORS
@@ -27,5 +29,8 @@ app.use("/", authRoute);
 //guared route
 app.use("/secured", authenticateJWT, movieRoute);
 
+// app.listen(port, () => {
+//     console.log(`server listening on port ${port}`);
+// })
 //export app
 module.exports = app;
