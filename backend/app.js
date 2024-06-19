@@ -23,9 +23,10 @@ app.use(passport.initialize());
 
 //use user routes
 app.use("api/users", userRoutes);
-//control auth
 
-app.use("/", authRoute);
+
+//control auth
+app.use(authRoute);
 //guared route
 app.use("/secured", authenticateJWT, movieRoute);
 

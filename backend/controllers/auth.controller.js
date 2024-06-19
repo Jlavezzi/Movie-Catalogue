@@ -26,20 +26,28 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   const { username, password } = req.body;
+  
 
     // Retrieve the salt rounds value from environment variables
     const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS, 10);
 
   try {
+   
+    // Check if the user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(409).json({ message: 'User already exists. Please log in.' });
+    }
    // Hash the password with the configured salt rounds
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
     res.status(201).json({ message: 'Registration successful' });
-    res.redirect('/login')
+   
     
   } catch (error) {
+    console.error('Registration error:', error);  // Log the error
     res.status(500).json({ message: 'Internal server error' });
   }
 };

@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 //define a schemafor the user
 const userSchema = new mongoose.Schema({
   //auth atttributes
-  email: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -16,12 +16,10 @@ const userSchema = new mongoose.Schema({
   },
   //user attributes
   name: {
-    type: String,
-    required: true,
+    type: String
   },
   age: {
-    type: Number,
-    required: true,
+    type: Number
   },
   //move attributes
   moviePreferences: [
