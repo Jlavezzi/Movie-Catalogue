@@ -8,7 +8,7 @@ export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [query, setQuery] = useState(""); //manage query for searchbar
-  const { data, loading, error, fetchMoreData } = useFetchData(query); //using custom fetcher hook
+  const { data, loading, error, fetchMoreData, } = useFetchData(query); //using custom fetcher hook
 
   return (
     <DataContext.Provider
@@ -17,6 +17,7 @@ export const DataProvider = ({ children }) => {
         loading,
         error,
         fetchMoreData,
+        setQuery
       }}
     >
       {children}

@@ -1,10 +1,10 @@
 import React from 'react';
-import searchbar from '../utils/SearchBar.utils';
+import Searchbar from '../utils/SearchBar.utils';
 
 const Header = () => {
   return (
     <div>
-        searchbar
+       < Searchbar />
     </div>
   )
 }
